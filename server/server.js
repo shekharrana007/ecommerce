@@ -1,12 +1,17 @@
+require('dotenv').config(); //Load environment variables from .env file
 const express = require('express'); //express module included
 const cookieParser = require('cookie-parser'); //cookie-parser module included
 const cors=require('cors');  //CORS module included to handle cross-origin requests
 const authRoutes = require('./src/routes/authRoutes'); //importing authRoutes
+const moongeose = require('mongoose'); //Mongoose module included for MongoDB interaction
+moongeose.connect(process.env.MONGO_URI)
+.then(()=>console.log('Database connected'))
+.catch(error=>console.log(error)); //Connecting to MongoDB using Mongoose   
 const app=express(); //instance of express application
 app.use(express.json()); //Middleware
 app.use(cookieParser()); //Middleware to parse cookies
 const corsOptions={
-    origin: 'http://localhost:3000', //Allow requests from this origin
+    origin: process.env.CLIENT_ENDPOINT, //Allow requests from the client endpoint specified in .env file
     credentials: true, //Allow cookies to be sent with requests
     
 }

@@ -3,6 +3,8 @@ import axios from "axios";
 import { useEffect } from "react";
 import Login from "./Login";
 import Home from "./Home";
+import Error from "./pages/Error";
+import Logout from "./pages/Logout";
 import AppLayout from "./layout/AppLayout";
 import Dashboard from './pages/Dashboard';
 import { useState } from "react";
@@ -35,7 +37,8 @@ function App() {
       {/*we are passing the updateUserDetails function to login beacause thats where we will get user information are authentication*/}
       <Route path="/login" element={userDetails ? <Navigate to="/dashboard" /> : <AppLayout><Login updateUserDetails={updateUserDetails} /></AppLayout>} />
       <Route path="/dashboard" element={userDetails ? <Dashboard /> : <Navigate to="/login" />} />
-
+    <Route path="/logout" element={userDetails ? <Logout updateUserDetails={updateUserDetails}/>:<Navigate to="/login" />} />
+    <Route path="/error" element={userDetails ? <Error/>:<AppLayout><Error /></AppLayout>} />
     </Routes>
   );
 }

@@ -85,7 +85,7 @@ function Login({ updateUserDetails }) {
                     <input type="password" name="password" placeholder="Enter your password" value={formData.password} onChange={handleChange} />
                     {errors.password && (errors.password)}
                 </div>
-                <button type="submit">Login</button>
+                <button >Login</button>
             </form>
         </div>
     );
