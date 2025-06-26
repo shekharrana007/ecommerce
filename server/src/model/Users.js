@@ -7,11 +7,19 @@ const UsersSchema=new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: false
     },
     name:{
         type: String,
         required: true
-    }
+    },
+    isGoogleuser:{
+        type:String,
+        required: false,
+    },
+    googleId:{
+        type: String,
+        required: false
+    },
 });
 module.exports=mongoose.model('Users',UsersSchema);

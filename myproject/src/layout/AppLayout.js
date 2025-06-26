@@ -1,14 +1,14 @@
-import  Header from "./header";
+import Header from "./Header";
 import Footer from "./Footer";
 
 
-function AppLayout({children}){
+function AppLayout({ children }) {
     return (
         <>
-        <Header/>
-        {children}
+            <Header />
+            {children}
 
-        <Footer/>
+            <Footer />
         </>
     );
 }
