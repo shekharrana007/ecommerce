@@ -1,10 +1,9 @@
-import { Link } from 'react-router-dom';
+import LinkDashboard from './links/LinkDashboard';
 function Dashboard() {
   return (
-    <div  className="container text-center">
-      <h1> User Dashboard</h1>
-      <Link to="/logout">Logout</Link>
-    </div>
+    <>
+   <LinkDashboard />
+    </>
   );
 }
 
