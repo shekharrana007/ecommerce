@@ -13,6 +13,7 @@ const UsersSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+<<<<<<< HEAD
     isGoogleuser: {
         type: String,
         required: false,
@@ -27,5 +28,15 @@ const UsersSchema = new mongoose.Schema({
         type: Number,
         default: 0
     }
+=======
+    isGoogleuser:{
+        type:String,
+        required: false,
+    },
+    googleId:{
+        type: String,
+        required: false
+    },
+>>>>>>> 98aa6cad518c9e1a5152469123095d5b77b87b67
 });
 module.exports = mongoose.model('Users', UsersSchema);

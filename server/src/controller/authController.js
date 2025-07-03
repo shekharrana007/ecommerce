@@ -1,6 +1,7 @@
 const { response } = require('express');
 const bcrypt = require('bcryptjs'); //for hashing passwords
 const express = require('express'); //for creating express application
+<<<<<<< HEAD
 const { OAuth2Client } = require('google-auth-library'); //for Google OAuth2 authentication
 
 const jwt = require('jsonwebtoken');
@@ -13,6 +14,20 @@ const authController = {
         if (!errors.isEmpty()) {
             return response.status(401).json({ errors: errors.array() });
         }
+=======
+ const{OAuth2Client} = require('google-auth-library'); //for Google OAuth2 authentication
+
+const jwt = require('jsonwebtoken');
+const Users = require('../model/Users');
+const { validationResult } = require('express-validator'); 
+const secret = 'a401d85c-58c1-46fd-b063-150790d3f36c'; //secret key for signing JWT
+const authController = {
+    login: async (request, response) => {
+       const errors= validationResult(request);
+       if(!errors.isEmpty()){
+           return response.status(401).json({ errors: errors.array() });
+         }
+>>>>>>> 98aa6cad518c9e1a5152469123095d5b77b87b67
 
         try {
             const { username, password } = request.body;
@@ -107,6 +122,7 @@ const authController = {
             });
             response.json({ message: 'User authenticated', userDetails: userDetails });
         }
+<<<<<<< HEAD
         catch (error) {
             console.log(error);
             return response.status(500).json({ error: 'Internal server error' });
@@ -159,5 +175,74 @@ const authController = {
             return response.status(500).json({ message: 'Internal server error' });
         }
     },
+=======
+    });
+},
+register:async(request,response)=>{
+    try{
+        const {name,username,password}=request.body;
+        const data=await Users.findOne({ email: username });
+        if(data){
+            return response.status(401).json({ message: 'User already exists' });
+        }
+        const encryptedPassword=await bcrypt.hash(password, 10);  
+        const user=new Users({
+            email:username,
+            password:encryptedPassword,
+            name:name
+        });
+        await user.save();
+        response.status(200).json({ message: 'User registered successfully' });
+    }
+    catch(error){
+        console.log(error);
+        return response.status(500).json({ error: 'Internal server error' });
+    }
+},
+googleAuth:async (request, response) => {
+    const{idToken}=request.body;
+    if(!idToken){
+        return response.status(400).json({ message: 'Invalid request' });
+    }
+    try{
+        const googleClient=new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+        const googleResponse=await googleClient.verifyIdToken({
+            idToken: idToken,
+            audience: process.env.GOOGLE_CLIENT_ID // Specify the CLIENT_ID of the app that accesses the backend
+        });
+    
+    const payload = googleResponse.getPayload();
+    const {sub: googleId, email, name} = payload;
+    // Check if user already exists in the database
+    let data=await Users.findOne({ email: email });
+    if(!data){
+        data=new Users({
+            email: email,
+            name: name,
+            isGoogleUser: true,
+            googleId: googleId
+        });
+        await data.save();
+    }
+    const user={
+        id: data._id ? data._id : googleId, // Use _id if available, otherwise use googleId
+        username:email,
+        name:name
+
+    };
+    const token = jwt.sign(user, secret, { expiresIn: '1h' });
+    response.cookie('jwttoken', token, {
+        httpOnly: true, //to prevent client side script from accessing the cookie
+        secure: true, //to ensure the cookie is sent over HTTPS only
+        domain: 'localhost', //set the domain to your server's domain
+        path: '/', //set the path to the root of your application
+    });
+    response.json({ message: 'User authenticated', userDetails: user });
+    }catch (error) {
+        console.error( error);
+        return response.status(500).json({ message: 'Internal server error' });
+    }
+},
+>>>>>>> 98aa6cad518c9e1a5152469123095d5b77b87b67
 };
 module.exports = authController;
