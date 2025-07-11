@@ -8,8 +8,11 @@ const authorize=(requiredPermission)=>{
             return response.status(401).json({meassage:"Unauthorized"});
         }
         const userPermission=permissions[user.role]||[];
+        // console.log(userPermission);
+        // console.log(user.role);
+        // console.log(requiredPermission);
         if(!userPermission.includes(requiredPermission)){
-            return response.status(403).json({meassage:"Forbidden: INsufficient Permission"});
+            return response.status(403).json({meassage:"Forbidden: Insufficient Permission"});
         }
         next();
     };

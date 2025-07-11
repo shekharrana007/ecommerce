@@ -14,7 +14,7 @@ const authMiddleware={
             else{
                 return response.status(401).json({ message: 'Invalid token' });
             }
-            request.user=user;
+           
 
             next();
         }

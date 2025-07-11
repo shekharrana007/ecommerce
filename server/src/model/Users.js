@@ -1,4 +1,13 @@
 const mongoose = require('mongoose');
+const subscriptionSchema = new mongoose.Schema({
+    id: { type: String }, // Razorpay subscription id
+    status: { type: String, default: 'pending' },
+    start: { type: Date }, end: { type: Date },
+    lastBillDate: { type: Date },
+    nextBillDate: { type: Date },
+    paymentsMade: { type: Number },
+    paymentsRemaining: { type: Number }
+});
 const UsersSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -13,7 +22,6 @@ const UsersSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-<<<<<<< HEAD
     isGoogleuser: {
         type: String,
         required: false,
@@ -27,16 +35,7 @@ const UsersSchema = new mongoose.Schema({
     credits: {
         type: Number,
         default: 0
-    }
-=======
-    isGoogleuser:{
-        type:String,
-        required: false,
     },
-    googleId:{
-        type: String,
-        required: false
-    },
->>>>>>> 98aa6cad518c9e1a5152469123095d5b77b87b67
+    subscription: { type: subscriptionSchema, default: () => ({}) }
 });
 module.exports = mongoose.model('Users', UsersSchema);

@@ -63,19 +63,17 @@ const userController = {
             }
             const user = await Users.findOne({ _id: id, adminId: request.user.id });
             if (!user) {
-                return response.stutus(404).json({
-                    message: "User does not exit"
+                return response.status(404).json({
+                    message: "User does not exist"
                 });
             }
             if (name) user.name = name;
             if (role) user.role = role;
-            console.log(user);
             await user.save();
-            response.json(user);
-
+            return response.json(user);
         } catch (error) {
             console.log(error);
-            response.status(500).json({ message: "Internal server error" });
+            return response.status(500).json({ message: "Internal server error" });
         }
     },
 

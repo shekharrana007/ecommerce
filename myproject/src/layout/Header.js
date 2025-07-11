@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
 
 function Header() {
   return (
@@ -40,29 +39,6 @@ function Header() {
         </div>
       </div>
     </nav>
-=======
-function Header() {
-  return (
-    <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container ">
-          <Link className="navbar-brand" to="/">
-            my app
-          </Link >
-          <Link className="nav-link active" aria-current="page" to="/">
-            Home
-          </Link >
-          <li className="nav-item">
-            <Link className="nav-link" to="/login">Login
-            </Link>
-          </li>
-
-        </div>
-
-      </nav>
-
-    </>
->>>>>>> 98aa6cad518c9e1a5152469123095d5b77b87b67
   );
 }
 

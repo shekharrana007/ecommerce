@@ -36,14 +36,16 @@ function UserHeader() {
                                 {userDetails && userDetails.name ? userDetails.name : "Account"}
                             </button>
                             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                               <Can
-                               permission='canViewUser'>
+                                <li><Link className="dropdown-item" to="/manage-payment"> Payments</Link> </li>
+
+                                <Can
+                                    permission='canViewUser'>
                                     <li>
                                         <Link className="dropdown-item" to="/users">
-                                        Manage Users
+                                            Manage Users
                                         </Link>
                                     </li>
-                               </Can>
+                                </Can>
                                 <li>
                                     <hr className="dropdown-divider" />
                                 </li>
